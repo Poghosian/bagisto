@@ -18,46 +18,43 @@
         </div>
 
         <div class="page-content">
+            <p style="color: white;">Write site link</p>
             @if(!empty($errorMessage))
-                <p class="error alert-danger" >{{$errorMessage}}</p>
+                <p class="error alert-danger">{{$errorMessage}}</p>
             @endif
-            <form action="{{route('admin.pagespeed.getSiteInfo')}}"  method="GET">
-                <p style="color: white;">Write site link</p>
-                <input type="text" name="link">
-                <button  type="submit">Submit</button>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            <form action="{{route('admin.pagespeed.getSiteInfo')}}" method="GET">
+                <div class="control-group has-error">
+                    <input style="" class="control" type="text" name="link">
+                </div>
+                <button class="btn btn-lg btn-primary" type="submit">Submit</button>
             </form>
             {{--                @dd($res['lighthouseResult']);--}}
             @if(!empty($res))
-                    <textarea style="display: none" id="json-input" autocomplete="off"> {{json_encode($res)}}</textarea>
-                    <pre id="json-renderer"></pre>
+                <textarea style="display: none" id="json-input" autocomplete="off"> {{json_encode($res)}}</textarea>
+                <pre id="json-renderer"></pre>
             @endif
-
-
-
-
-
-
-
-
         </div>
     </div>
-{{--    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>--}}
-{{--    <script src="{{asset('themes/default/assets/js/json-viewer.js')}}"></script>--}}
-{{--    <link rel="stylesheet" href="{{ asset('themes/default/assets/css/admin.css') }}">--}}
-{{--    <link rel="stylesheet" href="{{ asset('themes/default/assets/css/json-viewer.css') }}">--}}
+
     <script>
         function renderJson() {
             try {
                 var input = eval('(' + $('#json-input').val() + ')');
-            }
-            catch (error) {
+            } catch (error) {
                 return alert("Cannot eval JSON: " + error);
             }
             var options = {};
             console.log(options)
             $('#json-renderer').jsonViewer(input, options);
-            $(document).find('a').attr('href','javascript:void(0)')
-
         }
 
         // Generate on click

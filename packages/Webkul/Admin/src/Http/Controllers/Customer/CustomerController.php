@@ -38,7 +38,6 @@ class CustomerController extends Controller
     )
     {
         $this->_config = request('_config');
-        dd($this->_config);
     }
 
     /**
